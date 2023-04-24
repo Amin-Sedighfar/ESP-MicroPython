@@ -17,7 +17,7 @@ def connect():
     #Connect to WLAN
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
-    wlan.connect("Amin_IoT", "Amin2023")
+    wlan.connect("SSID", "PASSWORD")
     while wlan.isconnected() == False:
         print('Waiting for connection...')
         sleep(2)
