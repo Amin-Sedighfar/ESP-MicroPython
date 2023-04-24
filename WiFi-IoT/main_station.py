@@ -21,7 +21,7 @@ def connect():
     while wlan.isconnected() == False:
         print('Waiting for connection...')
         sleep(2)
-    wlan.ifconfig(('YOUR_STATIC_IP_ADDR', '255.255.255.0', '192.168.0.1', '8.8.8.8'))
+    wlan.ifconfig(('YOUR_STATIC_IP_ADDR', '255.255.255.0', '192.168.0.1', '192.168.0.1'))
     # If you don't want a static IP address just comment the above line
     sleep(1)
     ip = wlan.ifconfig()[0]
