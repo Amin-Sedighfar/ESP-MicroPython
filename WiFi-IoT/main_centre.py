@@ -19,14 +19,13 @@ def connect():
     #Connect to WLAN
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
-    wlan.connect("Amin_IoT", "Amin2023")
+    wlan.connect("SSID", "PASSWORD")
     sleep(5)
     while wlan.isconnected() == False:
-        wlan.connect("SSID", "PASSWORD")
         print('Waiting for connection...')
         sleep(3)
     lcd.move_to(0,0)
-    lcd.putstr("Your IP Addr:")
+    lcd.putstr("Your IP Addr: ")
     lcd.move_to(0,1)
     lcd.putstr(wlan.ifconfig()[0])
 
