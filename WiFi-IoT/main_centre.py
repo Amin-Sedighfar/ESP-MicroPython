@@ -8,7 +8,7 @@ i2c = I2C(sda=Pin(4), scl=Pin(5), freq=400000)
 I2C_ADDR = i2c.scan()[0]
 lcd = I2cLcd(i2c, I2C_ADDR, 2, 16)
 
-api_url = "http://STATION_STATIC_IP_ADDRESS"
+api_url = "http://YOUR_STATION_STATIC_IP_ADDRESS"
 payload = ""
 headers = "GET {} HTTP/1.1\r\nHost: {}\r\n\r\n".format(api_url, api_url.split("://")[1])
 
@@ -20,7 +20,7 @@ def connect():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     wlan.connect("SSID", "PASSWORD")
-    sleep(5)
+    sleep(4)
     while wlan.isconnected() == False:
         print('Waiting for connection...')
         sleep(3)
@@ -29,25 +29,24 @@ def connect():
     lcd.move_to(0,1)
     lcd.putstr(wlan.ifconfig()[0])
 
-
 def HttpRequest():
-    while True:
-        s = socket.socket()
-        s.connect((api_url.split("://")[1], 80))
-        s.send(headers.encode())
-        response = s.recv(1024)
-        resp = str(response)
-        temp = resp.index("Temperature")
-        hum = resp.index("Humidity")
-        lcd.move_to(0,0)
-        lcd.putstr("Temperature: " + resp[temp+13:temp+15] + "C" )
-        lcd.move_to(0,1)
-        lcd.putstr("Humidity: " + resp[hum+10:hum+12] + "%")
-        s.close()
+    s = socket.socket()
+    s.connect((api_url.split("://")[1], 80))
+    s.send(headers.encode())
+    response = s.recv(1024)
+    resp = str(response)
+    temp = resp.index("Temperature")
+    hum = resp.index("Humidity")
+    lcd.move_to(0,0)
+    lcd.putstr("Temperature: " + resp[temp+13:temp+15] + "C" )
+    lcd.move_to(0,1)
+    lcd.putstr("Humidity: " + resp[hum+10:hum+12] + "%")
+    s.close()
+        
+connect()
+while True:
+    try:
+        HttpRequest()
         sleep(10)
-
-try:
-    connect()
-    HttpRequest()
-except Exception as e:
-    print("An error occurred:", e)
+    except Exception as e:
+        print("An error occurred:", e)
