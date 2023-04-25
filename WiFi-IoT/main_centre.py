@@ -40,7 +40,7 @@ def HttpRequest():
     lcd.move_to(0,0)
     lcd.putstr("Temperature: " + resp[temp+13:temp+15] + "C" )
     lcd.move_to(0,1)
-    lcd.putstr("Humidity: " + resp[hum+10:hum+12] + "%")
+    lcd.putstr("Humidity: " + resp[hum+10:hum+12] + "%  ")
     s.close()
         
 connect()
@@ -53,4 +53,4 @@ while True:
         lcd.move_to(0,0)
         lcd.putstr("Connection Error")
         lcd.move_to(0,1)
-        lcd.putstr("Can't Read Data")
+        lcd.putstr("With th Sensor")
