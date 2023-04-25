@@ -50,3 +50,7 @@ while True:
         sleep(10)
     except Exception as e:
         print("An error occurred:", e)
+        lcd.move_to(0,0)
+        lcd.putstr("Connection Error")
+        lcd.move_to(0,1)
+        lcd.putstr("Can't Read Data")
